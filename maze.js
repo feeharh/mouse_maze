@@ -1,28 +1,31 @@
-$(document).ready(function(){
-    $(".boundary").hover(function(){
-        $(this).css("background-color", "red");
+$(document).ready(function () {
+  let touched = false;
+  let started = false;
+
+  $("#start").click(function () {      
+    $(".boundary").removeClass("youlose");
+    touched = false;
+    started = true;
+    $("#status").text('Click the "S" to begin.');
+  });
+
+    $(".boundary").mouseover(function () {
+        if (started) {
+      $(".boundary").addClass("youlose");
+      touched = true;
+        }
     });
 
-   
-
-    $("#end").mouseover(function(){
-        if($(".boundary").css("background-color", "red")){
-            $("#status").text("Sorry, you lost!");
+    $("#end").mouseover(function () {
+        if (started) {
+            $("#status").text(touched ? "You loose" : "You win!");
+            started = false;
         }
+    });  
 
-        else{
-            $("#status").text("You win!");
+    $("#maze").mouseleave(function(){
+        if(started) {
+            $(".boundary").addClass("youlose"); 
         }
-    
     });
-
-
-
-    $("#start").click(function(){
-        if($(".boundary").css("background-color", "red")){
-            $(".boundary").css("background-color", "white");
-        }
-       
-    });
-
 });
